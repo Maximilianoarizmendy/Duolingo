@@ -1,0 +1,2080 @@
+/* ==========================================================================
+   DUOLINGO PRESENTATION DECK - HIGH FIDELITY DESIGN SYSTEM
+   Inspired by: DuoliPASS, Pedro Arthur Poster Art, & Duolingo Max Gamification
+   ========================================================================== */
+
+:root {
+  /* Color Palette */
+  --bg-dark: #091319;
+  --bg-surface: #13222B;
+  --bg-surface-elevated: #1A2F3B;
+  --bg-surface-highlight: #213B49;
+  
+  --duo-green: #58CC02;
+  --duo-green-shadow: #46A302;
+  --duo-green-light: #61E002;
+  --duo-green-dim: rgba(88, 204, 2, 0.15);
+
+  --duo-blue: #1CB0F6;
+  --duo-blue-shadow: #1899D6;
+  --duo-blue-light: #44C4FF;
+
+  --duo-yellow: #58CC02; /* Replaced with Duolingo Green */
+  --duo-yellow-shadow: #46A302;
+  --duo-yellow-card: #58CC02;
+  --duo-yellow-dark: #091319;
+
+  --duo-orange: #FF9600;
+  --duo-orange-shadow: #CC7800;
+
+  --duo-red: #FF4B4B;
+  --duo-red-shadow: #EA2B2B;
+
+  --duo-purple: #CE82FF;
+  --duo-purple-shadow: #A54BF5;
+
+  --duo-cyan: #2EE2C2;
+  --duo-cyan-shadow: #1FB398;
+
+  --text-main: #FFFFFF;
+  --text-muted: #9BB0BE;
+  --text-cream: #FAF5E4;
+  --border-color: #243B48;
+
+  /* Typography */
+  --font-poster: 'Bebas Neue', 'Outfit', sans-serif;
+  --font-body: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-accent: 'Outfit', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   APP SHELL LAYOUT
+   ========================================================================== */
+
+.deck-app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ambient Background Lights */
+.ambient-background {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.18;
+}
+
+.glow-1 {
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, var(--duo-green) 0%, transparent 70%);
+  top: -200px;
+  right: -100px;
+  animation: floatGlow 14s ease-in-out infinite alternate;
+}
+
+.glow-2 {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, var(--duo-blue) 0%, transparent 70%);
+  bottom: -250px;
+  left: -150px;
+  animation: floatGlow 18s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes floatGlow {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.08); }
+  100% { transform: translate(-30px, 40px) scale(0.95); }
+}
+
+.ambient-stars {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 15% 20%, rgba(255, 255, 255, 0.4) 100%, transparent),
+    radial-gradient(2px 2px at 85% 15%, rgba(255, 255, 255, 0.3) 100%, transparent),
+    radial-gradient(1px 1px at 50% 40%, rgba(255, 255, 255, 0.25) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 70% 75%, rgba(255, 255, 255, 0.35) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 25% 85%, rgba(255, 255, 255, 0.3) 100%, transparent);
+}
+
+/* ==========================================================================
+   TOP HEADER (GAMIFIED DUOLINGO STYLE)
+   ========================================================================== */
+
+.duo-header {
+  position: relative;
+  z-index: 10;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background: rgba(19, 34, 43, 0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.duo-brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-poster);
+  font-size: 1.6rem;
+  letter-spacing: 0.05em;
+}
+
+.brand-owl {
+  font-size: 1.7rem;
+  animation: pulseOwl 3s ease-in-out infinite;
+}
+
+.brand-text {
+  color: var(--text-main);
+}
+
+.brand-highlight {
+  color: var(--duo-green);
+  margin-left: 2px;
+}
+
+.slide-counter-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--bg-surface-elevated);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--duo-green);
+  border: 1px solid var(--border-color);
+}
+
+.counter-divider {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* Duolingo Progress Bar */
+.header-center {
+  flex: 1;
+  max-width: 480px;
+  margin: 0 2rem;
+}
+
+.duo-progress-container {
+  width: 100%;
+}
+
+.duo-progress-track {
+  height: 16px;
+  background: #182832;
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.duo-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #58CC02 0%, #61E002 100%);
+  border-radius: 999px;
+  position: relative;
+  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 12px rgba(88, 204, 2, 0.4);
+}
+
+.duo-progress-gloss {
+  position: absolute;
+  top: 3px;
+  left: 8px;
+  right: 8px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+}
+
+/* Header Right: Stats */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.gamified-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.gamified-stat:hover {
+  transform: scale(1.08);
+}
+
+.stat-hearts { color: var(--duo-red); }
+.stat-streak { color: var(--duo-orange); }
+.stat-gems { color: var(--duo-blue); }
+
+.header-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border-color);
+}
+
+.header-icon-btn {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  transition: all 0.15s ease;
+}
+
+.header-icon-btn:hover {
+  background: var(--bg-surface-highlight);
+  border-color: var(--duo-green);
+  color: var(--duo-green);
+}
+
+.notes-btn.btn-active {
+  background: var(--duo-green-dim);
+  border-color: var(--duo-green);
+  color: var(--duo-green);
+}
+
+/* ==========================================================================
+   MAIN SLIDE VIEWPORT
+   ========================================================================== */
+
+.deck-main-viewport {
+  flex: 1;
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 3rem;
+  overflow-y: auto;
+}
+
+.slide-frame {
+  width: 100%;
+  max-width: 1100px;
+  height: 100%;
+  max-height: 640px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.slide-content {
+  width: 100%;
+  animation: slideFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================================
+   POSTER HEADERS & TYPOGRAPHY (PEDRO ARTHUR & DUOLIPASS STYLES)
+   ========================================================================== */
+
+.poster-header {
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.poster-title {
+  font-family: var(--font-poster);
+  font-size: clamp(3.2rem, 6.5vw, 5.2rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  color: var(--text-cream);
+  text-transform: uppercase;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.poster-highlight-strip {
+  display: inline-block;
+  background: var(--duo-green);
+  color: #091319;
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  padding: 0.35rem 1rem;
+  border-radius: 8px;
+  margin-top: 0.75rem;
+  transform: rotate(-1deg);
+  box-shadow: 0 4px 0 var(--duo-green-shadow);
+}
+
+.category-pill {
+  display: inline-block;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--duo-green);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+/* DuoliPASS Badge (Reference Image 1) */
+.duolipass-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #58CC02 0%, #3a8a00 100%);
+  color: #FFFFFF;
+  font-family: var(--font-accent);
+  font-weight: 900;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 1rem;
+  border-radius: 8px;
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 14px rgba(88, 204, 2, 0.4);
+  margin-bottom: 1.25rem;
+}
+
+/* Theatrical Spotlight Beam (Reference Image 3) */
+.spotlight-beam {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 480px;
+  height: 700px;
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.12) 0%, rgba(88, 204, 2, 0.06) 40%, transparent 75%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   CARDS & DUOLINGO 3D STYLING
+   ========================================================================== */
+
+.slide-layout-split {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.cards-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.duo-card {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-bottom: 5px solid #14232C;
+  border-radius: 20px;
+  padding: 1.1rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.duo-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--duo-green);
+  background: var(--bg-surface-elevated);
+}
+
+.duo-card:active {
+  transform: translateY(3px);
+  border-bottom-width: 2px;
+}
+
+.duo-card.highlight-border {
+  border-color: rgba(88, 204, 2, 0.5);
+  background: linear-gradient(135deg, var(--bg-surface) 0%, rgba(88, 204, 2, 0.08) 100%);
+}
+
+.duo-card.highlight-flame {
+  border-color: rgba(255, 75, 75, 0.5);
+  background: linear-gradient(135deg, var(--bg-surface) 0%, rgba(255, 75, 75, 0.1) 100%);
+}
+
+.card-icon-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.bg-green { background: rgba(88, 204, 2, 0.2); border: 2px solid rgba(88, 204, 2, 0.4); }
+.bg-blue { background: rgba(28, 176, 246, 0.2); border: 2px solid rgba(28, 176, 246, 0.4); }
+.bg-yellow { background: rgba(88, 204, 2, 0.2); border: 2px solid rgba(88, 204, 2, 0.4); }
+.bg-purple { background: rgba(206, 130, 255, 0.2); border: 2px solid rgba(206, 130, 255, 0.4); }
+.bg-orange { background: rgba(255, 150, 0, 0.2); border: 2px solid rgba(255, 150, 0, 0.4); }
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-meta {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.card-main-text {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--text-main);
+  margin-top: 2px;
+}
+
+/* Mascot Stage Container */
+.mascot-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.stage-glow-circle {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(88, 204, 2, 0.22) 0%, transparent 70%);
+  z-index: 0;
+}
+
+.duo-speech-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--duo-green);
+  margin-top: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--duo-green);
+  box-shadow: 0 0 8px var(--duo-green);
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+/* ==========================================================================
+   SLIDE 2: EXPANSION 2X2 GRID
+   ========================================================================== */
+
+.grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.subject-card {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-bottom: 5px solid #14232C;
+  border-radius: 20px;
+  padding: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.subject-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--duo-green);
+  background: var(--bg-surface-elevated);
+}
+
+.subject-card.active-card {
+  border-color: var(--duo-green);
+  background: linear-gradient(135deg, var(--bg-surface-elevated) 0%, rgba(88, 204, 2, 0.12) 100%);
+  transform: translateY(-2px);
+}
+
+.subject-icon {
+  font-size: 2.2rem;
+}
+
+.subject-title {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--text-main);
+}
+
+.subject-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.subject-status .dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--duo-green);
+}
+
+.punchline-card {
+  display: inline-block;
+  background: var(--duo-green);
+  color: #091319;
+  padding: 0.8rem 2rem;
+  border-radius: 16px;
+  border-bottom: 5px solid var(--duo-green-shadow);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  margin: 1.5rem auto 0;
+  display: table;
+}
+
+.punchline-card:hover {
+  transform: scale(1.04) rotate(-1deg);
+}
+
+.punchline-text {
+  font-family: var(--font-poster);
+  font-size: 1.9rem;
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   SLIDE 3: GAMIFICATION GRID & STREAK COUNTER
+   ========================================================================== */
+
+.battlepass-board {
+  background: #0D1A22;
+  border: 2px solid rgba(88, 204, 2, 0.35);
+  border-radius: 26px;
+  padding: 1.5rem 1.8rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(88, 204, 2, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.bp-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(88, 204, 2, 0.25);
+  padding: 0.75rem 1.25rem;
+  border-radius: 18px;
+  margin-bottom: 1.5rem;
+}
+
+.bp-tier-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(88, 204, 2, 0.15);
+  border: 2px solid var(--duo-green);
+  padding: 0.25rem 0.85rem;
+  border-radius: 12px;
+}
+
+.bp-tier-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.bp-tier-num {
+  font-family: var(--font-poster);
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--duo-green);
+}
+
+.bp-progress-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.bp-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+.bp-progress-bar {
+  height: 14px;
+  background: #172B35;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bp-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #58CC02 0%, #2EE2C2 100%);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 12px rgba(88, 204, 2, 0.6);
+}
+
+.bp-track-container {
+  position: relative;
+  padding: 1rem 0;
+}
+
+.bp-rail-line {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 4px;
+  background: #1C333F;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.bp-rail-active {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  height: 4px;
+  background: var(--duo-green);
+  transform: translateY(-50%);
+  z-index: 1;
+  box-shadow: 0 0 10px rgba(88, 204, 2, 0.8);
+}
+
+.gamification-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  position: relative;
+  z-index: 2;
+}
+
+.game-card {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-bottom: 5px solid #14232C;
+  border-radius: 20px;
+  padding: 1.4rem 1.1rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  background: var(--bg-surface-elevated);
+}
+
+.game-card:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+.flame-border:hover { border-color: var(--duo-orange); }
+.xp-border:hover { border-color: var(--duo-green); }
+.league-border:hover { border-color: var(--duo-purple); }
+.reward-border:hover { border-color: var(--duo-blue); }
+
+.game-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.game-icon {
+  font-size: 2rem;
+}
+
+.badge-tag {
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  color: var(--text-muted);
+}
+
+.game-card-title {
+  font-family: var(--font-poster);
+  font-size: 1.9rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.4rem;
+}
+
+.streak-display {
+  display: flex;
+  flex-direction: column;
+}
+
+.streak-num {
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.streak-unit {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.text-yellow { color: var(--duo-green); }
+.text-green { color: var(--duo-green); }
+.text-purple { color: var(--duo-purple); }
+.text-blue { color: var(--duo-blue); }
+
+.floating-xp-bubble {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--duo-green);
+  color: #091319;
+  font-weight: 900;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  animation: floatUp 0.8s ease-out forwards;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-24px); opacity: 0; }
+}
+
+.quote-banner {
+  background: linear-gradient(135deg, rgba(255, 150, 0, 0.15) 0%, rgba(255, 75, 75, 0.15) 100%);
+  border: 2px dashed rgba(255, 150, 0, 0.5);
+  border-radius: 18px;
+  padding: 1.25rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.quote-banner:hover {
+  transform: scale(1.02);
+}
+
+.quote-mark {
+  font-family: var(--font-poster);
+  font-size: 2.4rem;
+  color: var(--duo-orange);
+  vertical-align: middle;
+}
+
+.quote-text {
+  font-family: var(--font-accent);
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--text-cream);
+  letter-spacing: 0.02em;
+  margin: 0 0.5rem;
+}
+
+/* =========================================================
+   SLIDE 4: MEET DUO (MOOD SELECTOR & LASER EYES)
+   ========================================================= */
+
+.duo-stage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.duo-center-portrait {
+  min-height: 290px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mood-selector-row {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+
+.mood-button {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-bottom: 5px solid #14232C;
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 1.15rem;
+  padding: 0.75rem 1.6rem;
+  border-radius: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.15s ease;
+}
+
+.mood-button:hover {
+  transform: translateY(-2px);
+  background: var(--bg-surface-elevated);
+}
+
+.mood-button:active {
+  transform: translateY(3px);
+  border-bottom-width: 2px;
+}
+
+.mood-button.selected {
+  border-color: var(--duo-green);
+  background: var(--duo-green-dim);
+  color: var(--duo-green);
+}
+
+.mood-button.scary-active {
+  border-color: var(--duo-red) !important;
+  background: rgba(255, 75, 75, 0.2) !important;
+  color: var(--duo-red) !important;
+}
+
+.warning-callout {
+  display: flex;
+  gap: 0.8rem;
+  font-family: var(--font-poster);
+  font-size: 2.8rem;
+  letter-spacing: 0.08em;
+  color: var(--text-cream);
+  margin-top: 1.5rem;
+}
+
+.warning-glow-red {
+  color: var(--duo-red) !important;
+  text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+  animation: menacePulse 1s infinite alternate;
+}
+
+@keyframes menacePulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+.dark-scary-mode {
+  animation: redFlicker 0.3s ease;
+}
+
+/* =========================================================
+   SLIDE 5: DUO IS WATCHING (LOCK SCREEN NOTIFICATION)
+   ========================================================= */
+
+.watching-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.surveillance-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 75, 75, 0.15);
+  border: 1px solid rgba(255, 75, 75, 0.4);
+  color: var(--duo-red);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+}
+
+.radar-ping {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--duo-red);
+  box-shadow: 0 0 10px var(--duo-red);
+  animation: pulseDot 1s infinite;
+}
+
+.phone-mockup-wrapper {
+  background: #000000;
+  border: 4px solid #23343F;
+  border-radius: 36px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.phone-clock {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.phone-clock span {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.phone-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.push-notification-bubble {
+  background: rgba(30, 48, 59, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.push-notification-bubble:hover {
+  transform: scale(1.02);
+  border-color: var(--duo-green);
+}
+
+.notif-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.duo-app-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--duo-green);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.app-name {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.notif-time {
+  margin-left: auto;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.notif-headline {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+}
+
+.notif-subtext {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.countdown-tag {
+  margin-top: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* =========================================================
+   SLIDE 6: R.I.P. DUO (CYBERTRUCK & COMMUNITY GOAL)
+   ========================================================= */
+
+.text-rip {
+  color: #CBD5E1;
+}
+
+.rip-years-banner {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  color: #94A3B8;
+  font-family: var(--font-accent);
+  font-weight: 900;
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 1.25rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+.rip-stage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.tombstone-card {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-bottom: 5px solid #14232C;
+  border-radius: 28px;
+  padding: 1.8rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.tombstone-card:hover {
+  transform: translateY(-4px);
+  border-color: #64748B;
+}
+
+.event-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 75, 75, 0.15);
+  border: 1px solid rgba(255, 75, 75, 0.4);
+  color: var(--duo-red);
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  margin-top: 0.75rem;
+}
+
+.crash-icon {
+  font-size: 1.5rem;
+}
+
+.crash-text {
+  font-family: var(--font-poster);
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+}
+
+.tap-hint {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+.xp-resurrection-box {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-radius: 24px;
+  padding: 1.8rem;
+}
+
+.revive-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.revive-title {
+  font-family: var(--font-poster);
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  color: var(--duo-green);
+}
+
+.revive-fill {
+  background: linear-gradient(90deg, #1CB0F6 0%, #2EE2C2 100%) !important;
+}
+
+.revive-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.current-xp { color: var(--duo-cyan); }
+.status-label { color: var(--text-muted); }
+
+/* =========================================================
+   SLIDE 7: ROMANCE (DUO ❤️ DUA LIPA)
+   ========================================================= */
+
+.romance-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.romance-mascot-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.floating-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.floating-hearts .heart {
+  position: absolute;
+  font-size: 1.8rem;
+  animation: floatHeart 2.5s infinite ease-in-out;
+}
+
+.h1 { top: 10%; right: 15%; animation-delay: 0s; }
+.h2 { bottom: 20%; left: 10%; animation-delay: 0.8s; }
+.h3 { top: 30%; left: 20%; animation-delay: 1.5s; }
+
+@keyframes floatHeart {
+  0% { transform: translateY(0) scale(0.9); opacity: 0.7; }
+  50% { transform: translateY(-15px) scale(1.1); opacity: 1; }
+  100% { transform: translateY(0) scale(0.9); opacity: 0.7; }
+}
+
+.relationship-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.wedding-bonus-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, rgba(206, 130, 255, 0.15) 0%, rgba(255, 75, 75, 0.15) 100%);
+  border: 1px solid rgba(206, 130, 255, 0.4);
+  border-radius: 16px;
+  padding: 0.85rem 1.2rem;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.wedding-bonus-card:hover {
+  transform: scale(1.02);
+}
+
+.wedding-ring {
+  font-size: 1.8rem;
+}
+
+.wedding-headline {
+  display: block;
+  font-weight: 900;
+  font-size: 0.85rem;
+  color: var(--duo-purple);
+  letter-spacing: 0.05em;
+}
+
+.wedding-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+/* =========================================================
+   SLIDE 8: FUN FACTS (SOUND FAKE BUT REAL)
+   ========================================================= */
+
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.fact-pill-card {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-bottom: 4px solid #14232C;
+  border-radius: 18px;
+  padding: 1.1rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.fact-pill-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--duo-green);
+  background: var(--bg-surface-elevated);
+}
+
+.fact-icon {
+  font-size: 1.6rem;
+}
+
+.fact-text {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.real-stamp {
+  margin-left: auto;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  background: rgba(88, 204, 2, 0.15);
+  color: var(--duo-green);
+  border: 1px solid var(--duo-green);
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  transform: rotate(2deg);
+}
+
+.real-company-stamp-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--duo-green);
+  color: #091319;
+  padding: 0.85rem 2.2rem;
+  border-radius: 18px;
+  border-bottom: 5px solid var(--duo-green-shadow);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  margin: 1.5rem auto 0;
+  display: table;
+}
+
+.real-company-stamp-banner:hover {
+  transform: scale(1.04) rotate(-1deg);
+}
+
+.stamp-text {
+  font-family: var(--font-poster);
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+}
+
+/* =========================================================
+   SLIDE 9: FINALE & CELEBRATION
+   ========================================================= */
+
+.takeaways-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.takeaway-row {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-bottom: 5px solid #14232C;
+  border-radius: 20px;
+  padding: 1.25rem 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.takeaway-row:hover {
+  transform: translateY(-2px);
+  border-color: var(--duo-green);
+  background: var(--bg-surface-elevated);
+}
+
+.check-bullet {
+  font-size: 1.6rem;
+}
+
+.takeaway-text {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--text-main);
+}
+
+.thank-you-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.thank-you-button {
+  background: linear-gradient(135deg, var(--duo-green) 0%, var(--duo-green-light) 100%);
+  color: #FFFFFF;
+  border: none;
+  border-bottom: 6px solid var(--duo-green-shadow);
+  border-radius: 24px;
+  padding: 1.1rem 3.5rem;
+  font-family: var(--font-poster);
+  font-size: 2.4rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(88, 204, 2, 0.4);
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.thank-you-button:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 30px rgba(88, 204, 2, 0.5);
+}
+
+.thank-you-button:active {
+  transform: translateY(3px);
+  border-bottom-width: 2px;
+}
+
+/* ==========================================================================
+   NAVIGATION FOOTER (3D DUOLINGO BUTTONS)
+   ========================================================================== */
+
+.duo-footer {
+  position: relative;
+  z-index: 10;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background: rgba(19, 34, 43, 0.7);
+  backdrop-filter: blur(12px);
+  border-top: 2px solid var(--border-color);
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.duo-btn-3d {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.8rem;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  border: none;
+}
+
+.duo-btn-3d:active {
+  transform: translateY(3px);
+}
+
+.duo-btn-green {
+  background: var(--duo-green);
+  color: #FFFFFF;
+  border-bottom: 4px solid var(--duo-green-shadow);
+}
+.duo-btn-green:hover { background: var(--duo-green-light); }
+.duo-btn-green:active { border-bottom-width: 1px; }
+
+.duo-btn-secondary {
+  background: #233742;
+  color: #BAC7D0;
+  border-bottom: 4px solid #14232C;
+}
+.duo-btn-secondary:hover:not(:disabled) { background: #2B4250; color: #FFFFFF; }
+.duo-btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; }
+.duo-btn-secondary:active:not(:disabled) { border-bottom-width: 1px; }
+
+.duo-btn-yellow {
+  background: var(--duo-green);
+  color: #091319;
+  border-bottom: 4px solid var(--duo-green-shadow);
+}
+.duo-btn-yellow:active { border-bottom-width: 1px; }
+
+.duo-btn-cyan {
+  background: var(--duo-cyan);
+  color: #0A2620;
+  border-bottom: 4px solid var(--duo-cyan-shadow);
+}
+.duo-btn-cyan:active { border-bottom-width: 1px; }
+
+.duo-btn-icon-subtle {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.duo-btn-icon-subtle:hover {
+  background: var(--bg-surface-highlight);
+  color: var(--duo-green);
+  border-color: var(--duo-green);
+}
+
+.keyboard-shortcuts-pill {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+kbd {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-bottom: 2px solid #14232C;
+  border-radius: 6px;
+  padding: 0.15rem 0.45rem;
+  font-family: inherit;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0 2px;
+}
+
+/* ==========================================================================
+   SPEAKER NOTES DRAWER (PRIVATE TELEPROMPTER FOR PRESENTER)
+   ========================================================================== */
+
+.speaker-notes-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.speaker-notes-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.speaker-notes-panel {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  height: 100%;
+  background: #111E26;
+  border-left: 2px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.7);
+  animation: slideDrawer 0.25s ease-out;
+}
+
+@keyframes slideDrawer {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.notes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.notes-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(88, 204, 2, 0.15);
+  border: 1px solid rgba(88, 204, 2, 0.4);
+  color: var(--duo-green);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.8rem;
+  border-radius: 8px;
+}
+
+.close-notes-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.close-notes-btn:hover {
+  color: #FFFFFF;
+}
+
+.notes-slide-indicator {
+  margin-bottom: 1.5rem;
+}
+
+.slide-tag {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 800;
+}
+
+.notes-slide-title {
+  font-family: var(--font-poster);
+  font-size: 2.2rem;
+  color: var(--text-cream);
+  line-height: 1.1;
+  margin-top: 0.25rem;
+}
+
+.notes-content-box {
+  background: #182832;
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 1.5rem;
+  position: relative;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.speech-quote-icon {
+  font-family: var(--font-poster);
+  font-size: 3rem;
+  color: var(--duo-green);
+  line-height: 0.5;
+  margin-bottom: 0.5rem;
+}
+
+.speaker-script-text {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: #E2E8F0;
+  font-weight: 600;
+}
+
+.notes-footer-tip {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   THUMBNAILS MODAL
+   ========================================================================== */
+
+.thumbnails-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumbnails-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+}
+
+.thumbnails-modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  max-height: 85vh;
+  background: #111E26;
+  border: 2px solid var(--border-color);
+  border-radius: 28px;
+  padding: 2rem;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+}
+
+.thumbnails-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.thumbnails-header h2 {
+  font-family: var(--font-poster);
+  font-size: 2rem;
+  letter-spacing: 0.05em;
+  color: var(--text-cream);
+}
+
+.thumbnails-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.thumbnail-card {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-radius: 18px;
+  padding: 1.25rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.thumbnail-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--duo-green);
+  background: var(--bg-surface-elevated);
+}
+
+.thumbnail-card.current {
+  border-color: var(--duo-green);
+  box-shadow: 0 0 16px rgba(88, 204, 2, 0.3);
+}
+
+.thumb-num-badge {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: var(--duo-green);
+}
+
+.thumb-title {
+  display: block;
+  font-family: var(--font-poster);
+  font-size: 1.4rem;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+}
+
+.thumb-sub {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.thumb-pill-count {
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   ANIMATIONS & EFFECTS
+   ========================================================================== */
+
+.floating-animation {
+  animation: duoFloat 3s ease-in-out infinite;
+}
+
+@keyframes duoFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.gentle-float {
+  animation: gentleFloat 4s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.shake-infinite {
+  animation: scaryShake 0.4s ease-in-out infinite;
+}
+
+@keyframes scaryShake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-3px, 2px) rotate(-1deg); }
+  75% { transform: translate(3px, -2px) rotate(1deg); }
+}
+
+.screen-shake {
+  animation: screenCrash 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes screenCrash {
+  10%, 90% { transform: translate3d(-3px, 0, 0); }
+  20%, 80% { transform: translate3d(5px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-7px, 0, 0); }
+  40%, 60% { transform: translate3d(7px, 0, 0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .slide-layout-split,
+  .watching-layout,
+  .rip-stage,
+  .romance-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .gamification-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .thumbnails-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==========================================================================
+   AUTHENTIC DUOLINGO PHOTOGRAPHY & REAL GRAPHICS
+   ========================================================================== */
+
+.real-photo-thumb {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 2px solid var(--duo-green);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
+
+.real-mascot-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.real-duo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.real-duo-poster {
+  width: 100%;
+  height: 100%;
+  max-height: 380px;
+  object-fit: contain;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  border: 2px solid var(--border-color);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.real-duo-poster:hover {
+  transform: scale(1.02);
+  border-color: var(--duo-green);
+}
+
+.duo-scary-filter {
+  filter: drop-shadow(0 0 25px rgba(255, 0, 0, 0.8)) brightness(0.9) contrast(1.3) hue-rotate(320deg);
+}
+
+.duo-scary-eyes-overlay {
+  position: absolute;
+  top: 36%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 36px;
+  pointer-events: none;
+}
+
+.laser-eye {
+  width: 16px;
+  height: 16px;
+  background: #FF0000;
+  border-radius: 50%;
+  box-shadow: 0 0 16px 6px #FF0000, 0 0 30px 12px rgba(255, 0, 0, 0.6);
+  animation: pulseLaser 0.6s infinite alternate ease-in-out;
+}
+
+@keyframes pulseLaser {
+  0% { transform: scale(0.9); opacity: 0.85; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+
+.duo-dead-filter {
+  filter: grayscale(85%) opacity(0.8);
+}
+
+.duo-love-filter {
+  filter: drop-shadow(0 0 20px rgba(255, 75, 75, 0.6));
+}
+
+.real-card-hero-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-top: 0.6rem;
+  border: 1px solid var(--border-color);
+}
+
+.subject-real-img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+}
+
+/* ==========================================================================
+   UTILITY CLASSES (replacing Tailwind dependencies)
+   ========================================================================== */
+
+.text-center { text-align: center; }
+.text-xl { font-size: 1.25rem; }
+.text-4xl { font-size: 2.25rem; }
+.text-3xl { font-size: 1.875rem; }
+.text-sm { font-size: 0.875rem; }
+.text-xs { font-size: 0.75rem; }
+.font-bold { font-weight: 700; }
+.font-black { font-weight: 900; }
+.font-mono { font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.w-6 { width: 1.5rem; }
+.h-6 { height: 1.5rem; }
+.gap-4 { gap: 1rem; }
+.block { display: block; }
+.tracking-tight { letter-spacing: -0.025em; }
+.rounded-md { border-radius: 0.375rem; }
+.object-contain { object-fit: contain; }
+.grayscale { filter: grayscale(100%); }
+.opacity-60 { opacity: 0.6; }
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+
+/* Color utilities */
+.text-white { color: #FFFFFF; }
+.text-green-400 { color: var(--duo-green); }
+.text-red-400 { color: var(--duo-red); }
+.text-slate-300 { color: #CBD5E1; }
+.text-slate-400 { color: #94A3B8; }
+
+/* Image handling on dark backgrounds */
+.duo-mascot-wrapper img {
+  background: transparent;
+}
+
+/* Mascot wrapper — PNGs already have alpha channel transparency */
+.duo-mascot-wrapper {
+  border-radius: 50%;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.3));
+}
+
+.duo-mascot-wrapper.scary {
+  filter: drop-shadow(0 8px 30px rgba(255, 75, 75, 0.35));
+}
+
+.duo-mascot-wrapper.dead {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+/* ==========================================================================
+   MISSING CLASS DEFINITIONS
+   ========================================================================== */
+
+/* Subtle bounce for badge */
+.animate-bounce-subtle {
+  animation: bounceSubtle 2s ease-in-out infinite;
+}
+
+@keyframes bounceSubtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Brand owl pulse */
+@keyframes pulseOwl {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Progress bar (used in Slide 6 resurrection) */
+.progress-bar-bg {
+  height: 18px;
+  background: #172B35;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #58CC02 0%, #61E002 100%);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 12px rgba(88, 204, 2, 0.4);
+}
+
+/* Red flicker on scary mode */
+@keyframes redFlicker {
+  0% { background: transparent; }
+  25% { background: rgba(255, 0, 0, 0.06); }
+  50% { background: transparent; }
+  75% { background: rgba(255, 0, 0, 0.04); }
+  100% { background: transparent; }
+}
+
+/* Ghost Duo container (R.I.P. slide) */
+.ghost-duo-container {
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Drop shadow utilities */
+.drop-shadow-lg {
+  filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.04)) drop-shadow(0 4px 3px rgba(0, 0, 0, 0.1));
+}
+
+.drop-shadow-xl {
+  filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.03)) drop-shadow(0 8px 5px rgba(0, 0, 0, 0.08));
+}
+
+/* Inset/overlay helpers */
+.inset-0 { inset: 0; }
+.top-2 { top: 0.5rem; }
+.pointer-events-none { pointer-events: none; }
+
